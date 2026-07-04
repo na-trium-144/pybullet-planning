@@ -6,6 +6,7 @@ from collections import namedtuple
 from itertools import combinations
 
 import numpy as np
+import math
 
 from .pr2_never_collisions import NEVER_COLLISIONS
 from .utils import multiply, get_link_pose, set_joint_position, set_joint_positions, get_joint_positions, get_min_limit, get_max_limit, quat_from_euler, read_pickle, set_pose, \
@@ -677,7 +678,7 @@ def plan_pause_scan_path(pr2, tilt=0):
     theta, _ = get_pr2_field_of_view()
     lower_limit, upper_limit = get_joint_limits(pr2, head_joints[0])
     # Add one because half visible on limits
-    n = int(np.math.ceil((upper_limit - lower_limit) / theta) + 1)
+    n = int(math.ceil((upper_limit - lower_limit) / theta) + 1)
     epsilon = 1e-3
     return [np.array([pan, tilt]) for pan in np.linspace(lower_limit + epsilon,
                                                          upper_limit - epsilon, n, endpoint=True)]
@@ -743,7 +744,7 @@ def visible_base_generator(robot, target_point, base_range=(1., 1.), theta_range
         base_from_target = unit_from_theta(np.random.uniform(0., 2 * np.pi))
         look_distance = np.random.uniform(*base_range)
         base_xy = target_point[:2] - look_distance * base_from_target
-        base_theta = np.math.atan2(base_from_target[1], base_from_target[0]) + np.random.uniform(*theta_range)
+        base_theta = math.atan2(base_from_target[1], base_from_target[0]) + np.random.uniform(*theta_range)
         base_q = np.append(base_xy, wrap_angle(base_theta))
         yield base_q
 

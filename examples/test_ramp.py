@@ -5,6 +5,7 @@ from __future__ import print_function
 import argparse
 import time
 import numpy as np
+import math
 
 from itertools import product
 
@@ -106,7 +107,7 @@ def main():
     dump_body(ramp)
 
     obj = create_object(args.shape)
-    set_euler(obj, np.random.uniform(-np.math.radians(1), np.math.radians(1), 3))
+    set_euler(obj, np.random.uniform(-math.radians(1), math.radians(1), 3))
     set_point(obj, np.random.uniform(-1e-3, +1e-3, 3))
     #set_velocity(obj, linear=Point(x=-1))
     set_position(obj, z=2.)
